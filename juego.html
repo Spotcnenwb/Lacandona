@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apaga el Fuego</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+            background-color: #87CEEB; /* Color de fondo cielo */
+        }
+
+        #gameArea {
+            position: relative;
+            width: 90vw; /* Ancho responsivo */
+            max-width: 600px; /* Ancho máximo */
+            height: 80vh; /* Altura fija */
+            border: 2px solid #000; /* Borde del área de juego */
+            overflow: hidden; /* Ocultar elementos que salgan del área */
+            background-image: url('https://rutopia.com/wp-content/uploads/2022/01/CHIS-ELM-7_Explore-Le-Monde_-Banco-Fotos-Totonal.jpg'); /* Imagen de fondo de bosque */
+            background-size: cover; /* Ajustar la imagen de fondo */
+        }
+
+        .fire {
+            position: absolute;
+            background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfXATXeyFZOkyT2vv_qq5rZTQ-kdhvoujvfA&s'); /* Imagen de fuego */
+            width: 50px; /* Ancho del fuego */
+            height: 50px; /* Altura del fuego */
+            background-size: cover; /* Ajustar la imagen del fuego */
+            opacity: 0.8; /* Transparencia del fuego */
+            animation: flicker 0.5s infinite alternate; /* Efecto de parpadeo */
+        }
+
+        @keyframes flicker {
+            0% { opacity: 0.8; }
+            100% { opacity: 1; }
+        }
+
+        #score {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 24px;
+            color: white;
+        }
+
+        #timer {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 24px;
+            color: white;
+        }
+
+        #endMessage {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 36px;
+            color: white;
+            display: none; /* Ocultar el mensaje de fin de juego */
+        }
+
+        .button {
+            background-color: #e74c3c; /* Color rojo para el botón */
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            margin-top: 20px; /* Espacio superior para el botón */
+        }
+
+        .button:hover {
+            background-color: #c0392b; /* Color más oscuro al pasar el mouse */
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+
+<div id="gameArea">
+    <div id="score">Puntos: 0</div>
+    <div id="timer">Tiempo: 60</div>
+    <div id="endMessage">¡Juego Terminado! <br>Puntos: <span id="finalScore"></span></div>
+</div>
+<button class="button" onclick="window.location.href='Index sofia.html'">Volver a la Página Principal</button>
+
+<script>
+    const gameArea = document.getElementById("gameArea");
+    const scoreDisplay = document.getElementById("score");
+    const timerDisplay = document.getElementById("timer");
+    const endMessage = document.getElementById("endMessage");
+    const finalScoreDisplay = document.getElementById("finalScore");
+    let score = 0;
+    let timeLeft = 60; // 60 segundos para el juego
+    let gameInterval, fireInterval;
+
+    function createFire() {
+        const fire = document.createElement("div");
+        fire.className = "fire";
+
+        // Posicionar el fuego aleatoriamente
+        fire.style.top = Math.random() * (gameArea.clientHeight - 50) + "px";
+        fire.style.left = Math.random() * (gameArea.clientWidth - 50) + "px";
+
+        gameArea.appendChild(fire);
+
+        // Eliminar el fuego al hacer clic
+        fire.addEventListener("click", function() {
+            gameArea.removeChild(fire);
+            score++;
+            scoreDisplay.textContent = "Puntos: " + score;
+        });
+
+        // Eliminar el fuego si no se apaga en 3 segundos
+        setTimeout(() => {
+            if (gameArea.contains(fire)) {
+                gameArea.removeChild(fire);
+                // Propagación del fuego
+                if (Math.random() < 0.5) { // 50% de probabilidad de crear más fuego
+                    createFire();
+                }
+            }
+        }, 3000);
+    }
+
+    function startGame() {
+        // Crear un fuego cada 2 segundos, aumenta la cantidad según la puntuación
+        fireInterval = setInterval(() => {
+            const firesToCreate = Math.min(5, Math.floor(score / 5) + 1); // Aumentar la dificultad
+            for (let i = 0; i < firesToCreate; i++) {
+                createFire();
+            }
+        }, 2000);
+
+        // Temporizador de cuenta regresiva
+        gameInterval = setInterval(() => {
+            timeLeft--;
+            timerDisplay.textContent = "Tiempo: " + timeLeft;
+            if (timeLeft <= 0) {
+                endGame();
+            }
+        }, 1000);
+    }
+
+    function endGame() {
+        clearInterval(gameInterval);
+        clearInterval(fireInterval);
+        endMessage.style.display = "block"; // Mostrar mensaje de fin de juego
+        finalScoreDisplay.textContent = score; // Mostrar puntuación final
+        // Eliminar todos los fuegos restantes
+        const fires = document.querySelectorAll('.fire');
+        fires.forEach(fire => gameArea.removeChild(fire));
+    }
+
+    startGame(); // Comenzar el juego al cargar la página
+</script>
+
+</body>
+</html>

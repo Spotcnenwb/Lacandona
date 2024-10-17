@@ -1,0 +1,180 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f8f5;
+    margin: 0;
+    padding: 0;
+    scroll-behavior: smooth;
+}
+
+header {
+    position: relative;
+    background-image: url('https://blackpepper.travel/cache/2023-12/viajes-mexico-blackpepper-0078-galeria-2x-1008x671.jpg');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    text-align: center;
+    padding: 5rem 2rem;
+    z-index: 1;
+}
+
+header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: -1;
+}
+
+header h1 {
+    font-size: 4rem;
+    margin: 0;
+    animation: fadeInDown 1.5s ease;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+}
+
+@keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-50px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+section {
+    padding: 4rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+h2 {
+    color: #2e8b57;
+    font-size: 2.5rem;
+}
+
+.highlight {
+    background-color: #e0f7da;
+    padding: 1rem;
+    border-radius: 8px;
+    margin: 1rem 0;
+    animation: fadeIn 2s ease;
+    border-left: 4px solid #2e8b57;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.image-container {
+    text-align: center;
+    margin: 2rem 0;
+    animation: zoomIn 1.5s ease;
+}
+
+.image-container img {
+    max-width: 50%; /* Imágenes más pequeñas */
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+@media (max-width: 768px) {
+    .image-container img {
+        max-width: 80%; /* Ajuste en móviles */
+    }
+}
+
+.button {
+    background-color: #2e8b57;
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    margin-top: 1rem;
+    display: inline-block;
+}
+
+.button:hover {
+    background-color: #1f6b40;
+    transform: scale(1.05);
+}
+
+.parallax {
+    background-image: url('https://apasionadoxchiapas.com/imagenes/empresa/1695819881.webp');
+    height: 400px;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+}
+
+.parallax::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: -1;
+}
+
+.parallax h2 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    text-align: center;
+    font-size: 3rem;
+    padding: 10px 20px;
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 10px;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+}
+
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2.5rem;
+    }
+
+    h2 {
+        font-size: 2rem;
+    }
+}
+/* Redes sociales */
+.social-buttons {
+    text-align: center;
+    margin: 2rem 0;
+}
+
+.social-buttons a {
+    margin: 0 10px;
+    padding: 10px 20px;
+    background-color: #2e8b57;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.social-buttons a:hover {
+    background-color: #1f6b40;
+    transform: scale(1.05);
+}
+
+/* Ajustes adicionales en móviles */
+@media (max-width: 768px) {
+    body {
+        font-size: 16px; /* Tamaño de fuente más grande en móviles */
+    }
+
+    .button {
+        font-size: 1rem;
+        padding: 10px 20px;
+    }
+}
